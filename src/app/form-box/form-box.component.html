@@ -1,0 +1,15 @@
+<ng-container
+  [ngSwitch]="currentStep$ | async"
+  *ngFor="let question of questionsData; let i = index"
+>
+  <app-question-sub-form
+    *ngSwitchCase="getSubFormName(i)"
+    [question]="question"
+    [index]="i"
+    [questionsLength]="questionsData.length"
+    [prevSelectedVariant]="questionnaireForm.get(getSubFormName(i))?.value"
+    (questionSubFormInitialized)="questionSubFormInitialized(i, $event)"
+    (changeStep)="changeStep(i, $event)"
+    (submitForm)="submitForm()"
+  ></app-question-sub-form>
+</ng-container>

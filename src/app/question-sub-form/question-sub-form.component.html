@@ -1,0 +1,51 @@
+<form [formGroup]="questionSubForm" (submit)="handleSubmit()" class="form">
+  <h3 class="form-title">{{ question.question }}</h3>
+  <p class="questions-counter">{{ index + 1 }} / {{ questionsLength }}</p>
+  <mat-radio-group formControlName="selectedVariant" class="radio-group">
+    <mat-radio-button
+      class="radio"
+      *ngFor="let variant of question.variants; let i = index"
+      [value]="i + 1"
+    >
+      {{ question.variants[i] }}</mat-radio-button
+    >
+  </mat-radio-group>
+  <div class="btns-grid">
+    <div class="grid-item">
+      <button
+        mat-flat-button
+        class="btn"
+        *ngIf="index !== 0"
+        (click)="goBack()"
+        color="primary"
+        type="button"
+      >
+        Назад
+      </button>
+    </div>
+    <div class="grid-item">
+      <button
+        mat-flat-button
+        class="btn"
+        *ngIf="index < questionsLength - 1; else elseBtn"
+        (click)="goForward()"
+        color="primary"
+        type="button"
+        [disabled]="!prevSelectedVariant?.selectedVariant"
+      >
+        Далее
+      </button>
+      <ng-template #elseBtn
+        ><button
+          class="btn"
+          [disabled]="!prevSelectedVariant?.selectedVariant"
+          mat-flat-button
+          color="accent"
+          type="submit"
+        >
+          Узнать результат
+        </button></ng-template
+      >
+    </div>
+  </div>
+</form>
